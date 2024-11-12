@@ -1,0 +1,19 @@
+import spacy
+import streamlit as st
+
+nlp = spacy.load("en_core_web_sm")
+
+def render_displacy(doc):
+    html = displacy.render(doc, style="ent")
+    st.markdown(html, unsafe_allow_html=True)
+
+st.title("SpaCy NER Demo")
+
+text = st.text_input("Enter some text: ")
+
+doc = nlp(text)
+
+render_displacy(doc)
+
+for ent in doc.ents:
+    st.write(f"{ent.text} | {ent.label_} | {spacy.explain(ent.label_)}")
